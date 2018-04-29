@@ -32,6 +32,7 @@ function! neomake#core#instantiate_maker(maker, options) abort
                 throw 'Neomake: '.error
             endif
             call neomake#log#debug(error.'.', options)
+            return {}
         endif
         if !executable(maker.exe)
             if get(maker, 'auto_enabled', 0)
@@ -45,6 +46,7 @@ function! neomake#core#instantiate_maker(maker, options) abort
                 endif
                 call neomake#log#debug(error.'.', options)
             endif
+            return {}
         endif
     endif
     return maker
@@ -59,11 +61,13 @@ function! s:bind_makers_for_job(options, makers) abort
             let maker = neomake#core#instantiate_maker(maker, options)
         catch /^Neomake: /
             let error = substitute(v:exception, '^Neomake: ', '', '').'.'
-            call neomake#log#error(error, {'make_id': options.make_id})
+            call neomake#log#error(error, options)
             continue
         endtry
-        let options.maker = maker
-        let r += [options]
+        if !empty(maker)
+            let options.maker = maker
+            let r += [options]
+        endif
     endfor
     return r
 endfunction
