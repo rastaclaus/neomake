@@ -290,8 +290,13 @@ Execute (neomake#GetEnabledMakers without filetype):
   Save g:neomake_enabled_makers
   unlet! g:neomake_enabled_makers
 
-  let makers = neomake#GetEnabledMakers()
-  AssertEqual makers, []
+  AssertEqual map(neomake#GetEnabledMakers(''), 'v:val.name'), []
+
+  AssertEqual map(neomake#GetEnabledMakers(), 'v:val.name'), ['makeprg']
+
+  Save &makeprg
+  set makeprg=
+  AssertEqual map(neomake#GetEnabledMakers(), 'v:val.name'), []
 
   Save g:neomake_mymaker_maker
   let g:neomake_mymaker_maker = {}
