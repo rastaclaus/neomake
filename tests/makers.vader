@@ -338,6 +338,7 @@ Execute (maker.fn can set env var):
   \ 'args': ['-c', 'echo MYENV:$MYENV'],
   \ 'append_file': 0,
   \ 'errorformat': '%m',
+  \ 'name': 'echo_env_maker',
   \ }
   function! maker.fn(jobinfo)
     let self.args = ['MYENV=custom', self.exe] + self.args
