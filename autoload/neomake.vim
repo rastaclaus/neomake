@@ -727,7 +727,7 @@ endfunction
 
 function! neomake#get_maker_by_name(maker_name, ...) abort
     let for_ft = a:0 ? a:1 : 0
-    let ft_config = &filetype
+    let ft_config = for_ft is# 0 ? &filetype : for_ft
     let bufnr = bufnr('%')
     if a:maker_name !~# '\v^\w+$'
         throw printf('Neomake: Invalid maker name: "%s"', a:maker_name)
