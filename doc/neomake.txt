@@ -512,7 +512,7 @@ opened. Defaults to 0.
 
 *g:neomake_open_list_first_delay*
 With `g:neomake_open_list != 0` this configures the delay of executing the
-first |lwindow| or |cwindow| command in milliseconds.  This gets used only if
+first |:lwindow| or |:cwindow| command in milliseconds.  This gets used only if
 |g:neomake_open_list_resize_existing| is enabled, and is meant to avoid the
 resizing when jobs are finishing faster than that.  Defaults to 500.
 
