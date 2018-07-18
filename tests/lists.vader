@@ -534,7 +534,7 @@ Execute (uses height of list for second maker):
 Execute (adjusts height of list for second long-running maker):
   Save g:neomake_open_list, g:neomake_open_list_first_delay
   let g:neomake_open_list = 2
-  let g:neomake_open_list_first_delay = 50
+  let g:neomake_open_list_first_delay = 5
   new
   let wincount = winnr('$')
 
