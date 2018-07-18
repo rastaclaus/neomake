@@ -545,7 +545,9 @@ Execute (adjusts height of list for second long-running maker):
   CallNeomake 1, [g:error_maker, maker2]
 
   AssertEqual len(getloclist(0)), 2
-  AssertNeomakeMessage 'Resizing existing quickfix window (3, height=2).'
+  if neomake#has_async_support()
+    AssertNeomakeMessage 'Resizing existing quickfix window (3, height=2).'
+  endif
 
   let qf_win = winnr('$')
   AssertEqual getwinvar(qf_win, '&filetype'), 'qf'
