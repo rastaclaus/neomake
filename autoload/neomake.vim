@@ -930,13 +930,7 @@ function! s:HandleLoclistQflistDisplay(jobinfo, loc_or_qflist) abort
         return
     endif
     let height = min([len(a:loc_or_qflist), height])
-
-    if !get(g:, 'neomake_open_list_resize_existing', 1)
-                \ || !get(g:, 'neomake_open_list_first_delay', 500)
-        call s:do_handle_list_display(a:jobinfo, height, open_val)
-    else
-        call s:do_handle_list_display_via_timer(a:jobinfo, height, open_val)
-    endif
+    call s:do_handle_list_display_via_timer(a:jobinfo, height, open_val)
 endfunction
 
 function! s:handle_list_display_timer_cb(timer) abort
@@ -949,6 +943,13 @@ endfunction
 " Start a timer to handle list opening delayed (when it might trigger a
 " resize).
 function! s:do_handle_list_display_via_timer(jobinfo, height, open_val) abort
+    if !get(g:, 'neomake_open_list_resize_existing', 1)
+                \ || !get(g:, 'neomake_open_list_first_delay', 500)
+                \ || !has('timers')
+        call s:do_handle_list_display(a:jobinfo, a:height, a:open_val)
+        return
+    endif
+
     let make_id = a:jobinfo.make_id
     let existing_timer = get(s:list_display_timers_by_make_id, make_id, 0)
     if existing_timer
